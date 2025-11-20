@@ -1,5 +1,5 @@
 
-def execute_code(code: str, exec_globals: dict = None) -> dict:
+def execute_code(code: str, exec_globals: dict|None = None) -> dict:
     """
     Executes a block of Python code, captures stdout, and returns a serializable
     result dict containing only the captured output and a list of top-level

@@ -2,7 +2,9 @@ import streamlit as st
 import tempfile
 from pathlib import Path
 import os
-
+import asyncio
+import nest_asyncio
+nest_asyncio.apply()
 st.set_page_config(page_title="ML + RL Pipeline Runner", layout="wide")
 st.title("ML + RL Pipeline — Upload dataset and run")
 
@@ -21,7 +23,7 @@ if st.button("Run pipeline"):
             repo_root = Path(__file__).resolve().parents[0]
             data_dir = repo_root / "data"
             data_dir.mkdir(exist_ok=True)
-            save_path = data_dir / "uploaded_dataset.csv"
+            save_path = data_dir / "dataset.csv"
             with open(save_path, "wb") as fh:
                 fh.write(uploaded.getbuffer())
 
@@ -32,9 +34,9 @@ if st.button("Run pipeline"):
                 # Ensure project root on path
                 import sys
                 sys.path.insert(0, str(repo_root))
-                from AI_ML_BUILDER.src.data_analyst_fixed import run_data_analyst
+                from AI_ML_BUILDER.src.Data_Analyst import workflow
 
-                result = run_data_analyst(str(save_path), total_budget=int(budget), episodes=int(episodes), action_space=10)
+                result = asyncio.run(workflow(str(save_path), total_budget=int(budget), episodes=int(episodes)))
 
                 st.success("Pipeline completed")
                 rl_result = result.get("rl_result")
@@ -44,13 +46,11 @@ if st.button("Run pipeline"):
                     st.subheader("Budget Allocation")
                     allocation = rl_result.get("allocation")
                     st.write(allocation)
-                    st.write(f"Sum: {sum(allocation)} / Total budget: {rl_result.get('total_budget')}")
+                    st.write(f"Sum: {sum(allocation.values())} / Total budget: {rl_result.get('total_budget')}")
 
                     st.subheader("Sales comparison")
                     st.write("Predicted sales for allocation:", rl_result.get("predicted_sales"))
-                    st.write("Historical mean sales:", rl_result.get("historical_mean_sales"))
-                    st.write("Delta:", rl_result.get("delta"))
-                    st.write("Pct change:", rl_result.get("pct_change"))
+                    
 
             except Exception as e:
                 st.exception(e)
