@@ -36,7 +36,7 @@ The pipeline expects a CSV with columns representing spent budgets on marketing 
 - `Newspaper Ad Budget ($)`
 - `Sales` (target)
 
-If your CSV has different column names, rename them to match the expected names before uploading.
+If your CSV has different target column name, rename that to match the expected name before uploading.
 
 ## API / Programmatic Usage
 
