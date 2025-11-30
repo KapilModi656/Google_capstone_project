@@ -10,6 +10,9 @@ model_path = PROJECT_ROOT / "file" / "model.pkl"
 scaler_path = PROJECT_ROOT / "file" / "scaler.pkl"
 y_scaler_path = PROJECT_ROOT / "file" / "y_scaler.pkl"
 class Pipeline:
+    """
+    Builds a prediction pipeline using pre-trained model and scaler.
+    """
     def __init__(self):
         self.model = joblib.load(model_path)
         self.scaler = joblib.load(scaler_path)

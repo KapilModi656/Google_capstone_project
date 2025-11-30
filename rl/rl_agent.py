@@ -6,6 +6,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from rl.rl_environment import RLEnvironment
 class RLAgent:
+    """Simple Q-learning RL agent for budget allocation."""
     def __init__(self,budget=1000,epsilon=0.99,eps_min=0.01,eps_decay=0.995,gamma=0.95,lr=0.001):
         self.env = RLEnvironment(budget=budget)
         self.feature_names = self.env.feature_names

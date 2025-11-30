@@ -28,7 +28,7 @@ def execute_code(code: str, exec_globals: dict|None = None) -> dict:
         with contextlib.redirect_stdout(stdout_buf):
             exec(code, exec_globals, exec_locals)
     except Exception as e:
-        # Capture traceback in output so the caller (and user) can see errors
+     
         import traceback
 
         tb = traceback.format_exc()

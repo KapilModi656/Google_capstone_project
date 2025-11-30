@@ -1,0 +1,9 @@
+streamlit>=1.20
+pandas>=2.0
+numpy>=1.25
+scikit-learn>=1.2
+litellm>=0.3
+google-adk
+mistral
+mistralai
+matplotlib>=3.7

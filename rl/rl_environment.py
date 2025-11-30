@@ -5,6 +5,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from rl.run_rl_with_pipeline import Pipeline
 class RLEnvironment:
+    """"Reinforcement Learning Environment for budget allocation using a pre-trained ML pipeline.
+    """
     def __init__(self,budget):
         self.pipeline = Pipeline()
         self.states = self.pipeline.n_features
