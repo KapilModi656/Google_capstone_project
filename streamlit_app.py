@@ -4,6 +4,14 @@ from pathlib import Path
 import os
 import asyncio
 import nest_asyncio
+from llm import get_mistral_llm_agent
+from langchain_mistralai.chat_models import ChatMistralAI
+from langchain_core.output_parsers import StrOutputParser
+from dotenv import load_dotenv
+load_dotenv()
+mistral_api_key = os.environ.get("MISTRAL_API_KEY")
+llm = ChatMistralAI(model="codestral-latest", api_key=mistral_api_key)
+
 nest_asyncio.apply()
 st.set_page_config(page_title="ML + RL Pipeline Runner", layout="wide")
 st.title("ML + RL Pipeline — Upload dataset and run")
@@ -19,7 +27,7 @@ if st.button("Run pipeline"):
         st.error("Please upload a CSV file before running.")
     else:
         with st.spinner("Saving upload and running pipeline. This may take a while (LLM calls)..."):
-            # Save uploaded file to workspace data dir
+           
             repo_root = Path(__file__).resolve().parents[0]
             data_dir = repo_root / "data"
             data_dir.mkdir(exist_ok=True)
@@ -29,9 +37,8 @@ if st.button("Run pipeline"):
 
             st.info(f"Saved uploaded dataset to {save_path}")
 
-            # Import the pipeline runner
             try:
-                # Ensure project root on path
+               
                 import sys
                 sys.path.insert(0, str(repo_root))
                 from AI_ML_BUILDER.src.Data_Analyst import workflow
@@ -43,14 +50,16 @@ if st.button("Run pipeline"):
                 if rl_result is None:
                     st.warning("RL runner failed to produce a result; check logs.")
                 else:
-                    st.subheader("Budget Allocation")
-                    allocation = rl_result.get("allocation")
-                    st.write(allocation)
-                    st.write(f"Sum: {sum(allocation.values())} / Total budget: {rl_result.get('total_budget')}")
-
-                    st.subheader("Sales comparison")
-                    st.write("Predicted sales for allocation:", rl_result.get("predicted_sales"))
-                    
+                    st.subheader("RL Budget Allocation Result")
+                  
+                    prompt=f"""
+You are an expert data analyst. and master of Marketing budget allocation. RL agent has produced the following budget allocation result based on a pre-trained ML model.
+Provide a concise analysis of the following RL budget allocation result:
+{rl_result}
+"""
+                    chain = llm | StrOutputParser()
+                    analysis = chain.invoke(prompt)
+                    st.markdown(analysis)
 
             except Exception as e:
                 st.exception(e)
