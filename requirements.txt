@@ -10,4 +10,4 @@ matplotlib
 langchain
 langchain-mistralai
 langchain-core
-nest_asyncio
+nest-asyncio
