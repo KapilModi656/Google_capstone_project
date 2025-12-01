@@ -1,5 +1,5 @@
 
-def execute_code(code: str, exec_globals: dict|None = None) -> dict:
+def execute_code(code: str, exec_globals: dict = None) -> dict:
     """
     Executes a block of Python code, captures stdout, and returns a serializable
     result dict containing only the captured output and a list of top-level
@@ -28,8 +28,7 @@ def execute_code(code: str, exec_globals: dict|None = None) -> dict:
         with contextlib.redirect_stdout(stdout_buf):
             exec(code, exec_globals, exec_locals)
     except Exception as e:
-     
-        import traceback
+        #     import traceback
 
         tb = traceback.format_exc()
         return {
