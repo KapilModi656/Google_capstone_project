@@ -54,7 +54,7 @@ if st.button("Run pipeline"):
                   
                     prompt=f"""
 You are an expert data analyst. and master of Marketing budget allocation. RL agent has produced the following budget allocation result based on a pre-trained ML model.
-Provide a concise analysis of the following RL budget allocation result:
+Provide a concise analysis of the following RL budget allocation result and sales data given in are in units in which dataset uploaded by user sales column is present. Focus on key insights and recommendations for budget allocation strategy.:
 {rl_result}
 """
                     chain = llm | StrOutputParser()

@@ -25,7 +25,7 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-3. For a quick experiment, upload the sample dataset at `data/sample.csv` (included) or provide your own CSV with the same column structure.
+3. For a quick experiment, upload the sample dataset at `data/dataset.csv` (included) or provide your own CSV with the same column structure.
 
 ## Data format
 
@@ -80,7 +80,6 @@ Open the UI with `streamlit run streamlit_app.py`. The UI calls `run_data_analys
 
 ## Files of interest
 
-- `AI_ML_BUILDER/src/data_analyst_fixed.py` — a sanitized fallback pipeline module (good reference for wiring a safe pipeline).
 - `AI_ML_BUILDER/src/Data_Analyst.py` — original orchestrator (may need harmonization with the fixed version).
 - `llm.py` — LLM wrapper using provider-prefixed model ids.
 - `utils.py` — helpers for safe code execution and serialization.
